@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:path/path.dart' as p;
 
 class ScriptRunner extends StatefulWidget {
   const ScriptRunner({super.key});
@@ -17,8 +18,9 @@ class _ScriptRunnerState extends State<ScriptRunner> {
     });
 
     try {
-      final result = await Process.run(
-          'python3', ['${Directory.current.path}/python_scripts/mocap.py']);
+      final scriptPath =
+          p.join(Directory.current.path, 'lib', 'python_scripts', 'mocap.py');
+      final result = await Process.run('python3', [scriptPath]);
 
       setState(() {
         _output = result.stdout.toString().trim();
